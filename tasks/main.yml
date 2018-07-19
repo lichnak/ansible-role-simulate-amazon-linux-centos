@@ -1,0 +1,34 @@
+---
+- name: pip modules to secure access to Ansible Galaxy
+  pip:
+    name: awscli
+    executable: /usr/local/pyenv/shims/pip
+
+- name: create AWS config directory
+  file:
+    path: ~/.aws
+    state: directory
+    owner: root
+    group: root
+    mode: 0700
+
+- name: set AWS credentials file
+  template:
+    src: credentials.j2
+    dest: ~/.aws/credentials
+    owner: root
+    group: root
+    mode: 0600
+
+- name: change timezone as JST
+  copy:
+    src: /usr/share/zoneinfo/Japan
+    dest: /etc/localtime
+    remote_src: yes
+
+- name: set timezone as JST
+  replace:
+    path: /etc/sysconfig/clock
+    regexp: ^ZONE\s*=\s*"UTC"
+    replace: ZONE="Asia/Tokyo"
+
