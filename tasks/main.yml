@@ -47,3 +47,7 @@
     group: root
     mode: 0644
   when: not stat_sysconfig_clock.stat.exists
+
+- name: install yum-plugin-fastestmirror
+  yum:
+    name: yum-plugin-fastestmirror
