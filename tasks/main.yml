@@ -1,4 +1,9 @@
 ---
+- name: Ensure that variable simulate_amazon_linux_set_credentials_file is set
+  fail:
+    msg: Variable 'simulate_amazon_linux_set_credentials_file' undefined
+  when: simulate_amazon_linux_set_credentials_file is undefined
+
 - name: pip modules to secure access to Ansible Galaxy
   pip:
     name: awscli
@@ -20,3 +25,4 @@
     owner: root
     group: root
     mode: 0600
+  when: simulate_amazon_linux_set_credentials_file
